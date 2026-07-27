@@ -33,6 +33,154 @@ body{
 
     line-height:1.5;
 
+    min-height:100vh;
+
+}
+
+.auth-screen{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:24px;
+
+    background:radial-gradient(circle at top, #2f2f2f 0%, #171717 70%);
+
+}
+
+.auth-card{
+
+    width:min(100%, 420px);
+
+    padding:32px;
+
+    border-radius:20px;
+
+    background:#242424;
+
+    border:1px solid #3b3b3b;
+
+    box-shadow:0 14px 42px rgba(0,0,0,.35);
+
+    text-align:center;
+
+}
+
+.auth-logo{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:18px;
+
+    margin-bottom:16px;
+
+}
+
+.auth-card h1{
+
+    font-size:28px;
+
+    color:#ffd54f;
+
+    margin-bottom:10px;
+
+}
+
+.auth-card p{
+
+    color:#bdbdbd;
+
+    margin-bottom:18px;
+
+}
+
+.auth-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.auth-message{
+
+    min-height:20px;
+
+    color:#ff5252;
+
+    font-size:14px;
+
+    margin:0;
+
+}
+
+.app-shell{
+
+    display:none;
+
+}
+
+body.authenticated .app-shell{
+
+    display:block;
+
+}
+
+body.authenticated .auth-screen{
+
+    display:none;
+
+}
+
+.logoutButton{
+
+    margin-top:12px;
+
+    background:#2d2d2d;
+
+    color:#ffd54f;
+
+    border:1px solid #ffd54f;
+
+}
+
+.logoutButton:hover{
+
+    background:#3b3b3b;
+
+    transform:translateY(-2px);
+
+}
+
+.sr-only{
+
+    position:absolute;
+
+    width:1px;
+
+    height:1px;
+
+    padding:0;
+
+    margin:-1px;
+
+    overflow:hidden;
+
+    clip:rect(0,0,0,0);
+
+    white-space:nowrap;
+
+    border:0;
+
 }
 
 /* ===========================
@@ -752,6 +900,18 @@ button:hover{
 .container{
 
     width:98%;
+
+}
+
+.auth-card{
+
+    padding:24px;
+
+}
+
+.auth-card h1{
+
+    font-size:24px;
 
 }
 

@@ -1,4 +1,6 @@
 (function () {
+  const APP_PASSWORD = 'Pedagang Brok223';
+  const AUTH_STORAGE_KEY = 'albionCalculatorAuthenticated';
   const STORAGE_KEYS = {
     presets: 'albionCalculatorPresets',
     history: 'albionCalculatorHistory'
@@ -80,7 +82,21 @@
     nutritionCost: document.getElementById('nutritionCost')
   };
 
+  const authEls = {
+    form: document.getElementById('loginForm'),
+    passwordInput: document.getElementById('passwordInput'),
+    message: document.getElementById('loginMessage'),
+    logoutButton: document.getElementById('logoutButton')
+  };
+
+  let appInitialized = false;
+
   function init() {
+    if (appInitialized) {
+      return;
+    }
+
+    appInitialized = true;
     bindEvents();
     loadStaticData();
     loadHistory();
@@ -88,6 +104,75 @@
     renderMultiItems();
     updateFeeValue();
     calculateAndRender(false);
+  }
+
+  function bindAuthEvents() {
+    if (!authEls.form || !authEls.passwordInput || !authEls.logoutButton) {
+      return;
+    }
+
+    authEls.form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      handleLogin();
+    });
+
+    authEls.passwordInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleLogin();
+      }
+    });
+
+    authEls.logoutButton.addEventListener('click', handleLogout);
+  }
+
+  function handleLogin() {
+    if (authEls.passwordInput.value === APP_PASSWORD) {
+      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      authEls.message.textContent = '';
+      showAuthenticatedView();
+      if (!appInitialized) {
+        init();
+      }
+      authEls.form.reset();
+      authEls.passwordInput.focus();
+      return;
+    }
+
+    authEls.message.textContent = 'Incorrect password';
+    authEls.passwordInput.value = '';
+    authEls.passwordInput.focus();
+  }
+
+  function handleLogout() {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    authEls.message.textContent = '';
+    authEls.form.reset();
+    hideAuthenticatedView();
+  }
+
+  function showAuthenticatedView() {
+    document.body.classList.add('authenticated');
+  }
+
+  function hideAuthenticatedView() {
+    document.body.classList.remove('authenticated');
+    authEls.passwordInput.focus();
+  }
+
+  function bootstrapAuth() {
+    bindAuthEvents();
+
+    if (localStorage.getItem(AUTH_STORAGE_KEY) === 'true') {
+      showAuthenticatedView();
+      if (!appInitialized) {
+        init();
+      }
+      return;
+    }
+
+    hideAuthenticatedView();
+    authEls.passwordInput.focus();
   }
 
   function bindEvents() {
@@ -712,8 +797,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', bootstrapAuth);
   } else {
-    init();
+    bootstrapAuth();
   }
 })();

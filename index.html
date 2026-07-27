@@ -16,11 +16,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <img class="auth-logo" src="assets/icons/icon-192.png" alt="Albion Calculator logo">
       <h1>Albion Universal Craft Calculator</h1>
-      <p>Universal Calculator for Crafting, Focus, Profit, ROI, Multi Item &amp; Region Comparison</p>
-    </header>
+      <p>Enter the password to continue.</p>
+      <form id="loginForm" class="auth-form">
+        <label for="passwordInput" class="sr-only">Password</label>
+        <input id="passwordInput" type="password" placeholder="Enter password" autocomplete="current-password" aria-label="Password">
+        <button type="submit">Login</button>
+        <p id="loginMessage" class="auth-message" role="alert" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-shell" id="appShell">
+    <div class="container">
+      <header>
+        <h1>Albion Universal Craft Calculator</h1>
+        <p>Universal Calculator for Crafting, Focus, Profit, ROI, Multi Item &amp; Region Comparison</p>
+        <button id="logoutButton" class="logoutButton" type="button">Logout</button>
+      </header>
 
     <section class="card">
       <h2>Dashboard</h2>
@@ -335,7 +351,8 @@
       </table>
     </section>
 
-    <footer>Albion Universal Craft Calculator v1.0</footer>
+      <footer>Albion Universal Craft Calculator v1.0</footer>
+    </div>
   </div>
 
   <script src="app.js"></script>
