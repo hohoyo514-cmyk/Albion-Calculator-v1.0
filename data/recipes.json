@@ -1,0 +1,40 @@
+{
+    "bronze_bar":{
+        "materials":[
+            {
+                "name":"Tin Ore T3",
+                "amount":2
+            },
+            {
+                "name":"Tin Bar T2",
+                "amount":1
+            }
+        ]
+    },
+
+    "steel_bar":{
+        "materials":[
+            {
+                "name":"Copper Ore T4",
+                "amount":2
+            },
+            {
+                "name":"Bronze Bar T3",
+                "amount":1
+            }
+        ]
+    },
+
+    "great_fire_staff":{
+        "materials":[
+            {
+                "name":"Steel Bar T4",
+                "amount":16
+            },
+            {
+                "name":"Chestnut Plank T4",
+                "amount":8
+            }
+        ]
+    }
+}
