@@ -1,5 +1,5 @@
 (function () {
-  const APP_PASSWORD = 'CHANGE_THIS_PASSWORD';
+  const APP_PASSWORD = 'Pedagang Brok233';
   const AUTH_STORAGE_KEY = 'albionCalculatorAuthenticated';
   const STORAGE_KEYS = {
     presets: 'albionCalculatorPresets',
