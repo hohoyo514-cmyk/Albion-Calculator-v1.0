@@ -16,6 +16,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-card">
+      <img class="auth-logo" src="assets/icons/icon-192.png" alt="Albion Calculator logo">
+      <h1>Albion Universal Craft Calculator</h1>
+      <p>Professional offline crafting and trading assistant</p>
+      <div class="splash-loader" aria-label="Loading"></div>
+      <p class="version">Version 2.0</p>
+    </div>
+  </div>
+
   <div class="auth-screen" id="authScreen">
     <div class="auth-card">
       <img class="auth-logo" src="assets/icons/icon-192.png" alt="Albion Calculator logo">
@@ -34,8 +44,11 @@
     <div class="container">
       <header>
         <h1>Albion Universal Craft Calculator</h1>
-        <p>Universal Calculator for Crafting, Focus, Profit, ROI, Multi Item &amp; Region Comparison</p>
-        <button id="logoutButton" class="logoutButton" type="button">Logout</button>
+        <p>Universal Calculator for Crafting, Focus, Profit, ROI, Multi Item, Route Optimizer &amp; Offline Trading Assistant</p>
+        <div class="header-actions">
+          <button id="darkModeToggle" type="button">☀️ Light Mode</button>
+          <button id="logoutButton" class="logoutButton" type="button">Logout</button>
+        </div>
       </header>
 
     <section class="card">
@@ -116,12 +129,95 @@
             <th>Material</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Bridgewatch</th>
+            <th>Martlock</th>
+            <th>Lymhurst</th>
+            <th>Fort Sterling</th>
+            <th>Thetford</th>
+            <th>Caerleon</th>
+            <th>Brecilien</th>
             <th>Total</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody id="materialBody"></tbody>
       </table>
+    </section>
+
+    <section class="card">
+      <h2>Material Source Optimizer</h2>
+      <div class="dashboard optimizer-grid">
+        <div class="box">
+          <span>Cheapest City</span>
+          <h3 id="optimizerCheapestCity">-</h3>
+        </div>
+        <div class="box">
+          <span>Cheapest Price</span>
+          <h3 id="optimizerCheapestPrice">0</h3>
+        </div>
+        <div class="box">
+          <span>Best Single City</span>
+          <h3 id="optimizerSingleCity">-</h3>
+        </div>
+        <div class="box">
+          <span>Mixed Strategy Cost</span>
+          <h3 id="optimizerMixedCost">0</h3>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Qty</th>
+            <th>Cheapest City</th>
+            <th>Cheapest Price</th>
+            <th>Total Cost</th>
+            <th>Single City</th>
+          </tr>
+        </thead>
+        <tbody id="optimizerTableBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Inventory Mode</h2>
+      <div class="grid2">
+        <div>
+          <label for="inventoryOwnedQty">Owned Quantity</label>
+          <input id="inventoryOwnedQty" type="number" value="0" min="0" aria-label="Owned quantity">
+        </div>
+        <div>
+          <label for="inventoryAlreadyOwned">Already Owned</label>
+          <input id="inventoryAlreadyOwned" type="checkbox" aria-label="Already owned">
+        </div>
+      </div>
+      <div class="dashboard inventory-grid">
+        <div class="box">
+          <span>Remaining Quantity</span>
+          <h3 id="inventoryRemainingQty">0</h3>
+        </div>
+        <div class="box">
+          <span>Purchase Quantity</span>
+          <h3 id="inventoryPurchaseQty">0</h3>
+        </div>
+        <div class="box">
+          <span>Updated Profit</span>
+          <h3 id="inventoryProfit">0</h3>
+        </div>
+        <div class="box">
+          <span>Updated ROI</span>
+          <h3 id="inventoryROI">0%</h3>
+        </div>
+      </div>
+      <div class="box compact-box">
+        <span>Shopping List</span>
+        <p id="inventoryShoppingList">-</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Shopping Checklist</h2>
+      <div id="shoppingChecklist" class="checklist"></div>
     </section>
 
     <section class="card">
@@ -178,6 +274,8 @@
             <th>Craft Fee</th>
             <th>Sell Price</th>
             <th>Tax (%)</th>
+            <th>Focus Return</th>
+            <th>Nutrition</th>
             <th>Transport</th>
           </tr>
         </thead>
@@ -188,6 +286,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Bridgewatch craft fee" title="Bridgewatch craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Bridgewatch sell price" title="Bridgewatch sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Bridgewatch tax" title="Bridgewatch tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Bridgewatch focus return" title="Bridgewatch focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Bridgewatch nutrition cost" title="Bridgewatch nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Bridgewatch transport" title="Bridgewatch transport"></td>
           </tr>
           <tr>
@@ -196,6 +296,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Martlock craft fee" title="Martlock craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Martlock sell price" title="Martlock sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Martlock tax" title="Martlock tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Martlock focus return" title="Martlock focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Martlock nutrition cost" title="Martlock nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Martlock transport" title="Martlock transport"></td>
           </tr>
           <tr>
@@ -204,6 +306,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Lymhurst craft fee" title="Lymhurst craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Lymhurst sell price" title="Lymhurst sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Lymhurst tax" title="Lymhurst tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Lymhurst focus return" title="Lymhurst focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Lymhurst nutrition cost" title="Lymhurst nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Lymhurst transport" title="Lymhurst transport"></td>
           </tr>
           <tr>
@@ -212,6 +316,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Fort Sterling craft fee" title="Fort Sterling craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Fort Sterling sell price" title="Fort Sterling sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Fort Sterling tax" title="Fort Sterling tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Fort Sterling focus return" title="Fort Sterling focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Fort Sterling nutrition cost" title="Fort Sterling nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Fort Sterling transport" title="Fort Sterling transport"></td>
           </tr>
           <tr>
@@ -220,6 +326,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Thetford craft fee" title="Thetford craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Thetford sell price" title="Thetford sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Thetford tax" title="Thetford tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Thetford focus return" title="Thetford focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Thetford nutrition cost" title="Thetford nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Thetford transport" title="Thetford transport"></td>
           </tr>
           <tr>
@@ -228,6 +336,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Caerleon craft fee" title="Caerleon craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Caerleon sell price" title="Caerleon sell price"></td>
             <td><input class="tax" type="number" value="10.5" step="0.1" aria-label="Caerleon tax" title="Caerleon tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Caerleon focus return" title="Caerleon focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Caerleon nutrition cost" title="Caerleon nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Caerleon transport" title="Caerleon transport"></td>
           </tr>
           <tr>
@@ -236,6 +346,8 @@
             <td><input class="fee" type="number" value="0" aria-label="Brecilien craft fee" title="Brecilien craft fee"></td>
             <td><input class="sell" type="number" value="0" aria-label="Brecilien sell price" title="Brecilien sell price"></td>
             <td><input class="tax" type="number" value="6.5" step="0.1" aria-label="Brecilien tax" title="Brecilien tax"></td>
+            <td><input class="focusReturn" type="number" value="0" aria-label="Brecilien focus return" title="Brecilien focus return"></td>
+            <td><input class="nutritionCost" type="number" value="0" aria-label="Brecilien nutrition cost" title="Brecilien nutrition cost"></td>
             <td><input class="transport" type="number" value="0" aria-label="Brecilien transport" title="Brecilien transport"></td>
           </tr>
         </tbody>
@@ -243,9 +355,14 @@
       <div class="buttonGroup">
         <button id="calculate" type="button">Calculate Profit</button>
         <button id="reset" type="button">Reset</button>
-        <button id="savePreset" type="button">Save Preset</button>
-        <button id="loadPreset" type="button">Load Preset</button>
+        <button id="savePreset" type="button">Save</button>
+        <button id="loadPreset" type="button">Load</button>
+        <button id="renamePreset" type="button">Rename</button>
+        <button id="deletePreset" type="button">Delete</button>
+        <button id="exportJson" type="button">Export JSON</button>
+        <button id="importJson" type="button">Import JSON</button>
         <button id="exportCSV" type="button">Export CSV</button>
+        <input id="importPresetInput" type="file" accept="application/json" hidden>
       </div>
     </section>
 
@@ -270,6 +387,84 @@
           <input id="nutritionCost" type="number" value="0" aria-label="Nutrition cost">
         </div>
       </div>
+    </section>
+
+    <section class="card">
+      <h2>Transport Matrix</h2>
+      <div id="transportMatrix"></div>
+    </section>
+
+    <section class="card">
+      <h2>Route Optimizer</h2>
+      <div id="strategySummary" class="strategy-summary"></div>
+      <div class="grid2 strategy-grid">
+        <div class="strategy-card">
+          <h3>Option A</h3>
+          <div id="strategyA"></div>
+        </div>
+        <div class="strategy-card">
+          <h3>Option B</h3>
+          <div id="strategyB"></div>
+        </div>
+        <div class="strategy-card">
+          <h3>Option C</h3>
+          <div id="strategyC"></div>
+        </div>
+        <div class="strategy-card">
+          <h3>Route Insight</h3>
+          <p id="routeExplanation"></p>
+          <div id="warningBox" class="warning-box"></div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Buy</th>
+            <th>Craft</th>
+            <th>Sell</th>
+            <th>Material Cost</th>
+            <th>Craft Cost</th>
+            <th>Transport</th>
+            <th>Profit</th>
+            <th>ROI</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="routeTableBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Best Item List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Investment</th>
+            <th>Profit</th>
+            <th>ROI</th>
+            <th>Break Even</th>
+          </tr>
+        </thead>
+        <tbody id="bestItemBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Market History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Lowest</th>
+            <th>Highest</th>
+            <th>Average</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody id="marketHistoryBody"></tbody>
+      </table>
     </section>
 
     <section class="card">
@@ -355,6 +550,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app-enhanced.js"></script>
 </body>
 </html>

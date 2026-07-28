@@ -25,6 +25,7 @@ body{
     background:#171717;
 
     color:#f2f2f2;
+    transition:background .25s, color .25s;
 
     font-family:
     Arial,
@@ -135,6 +136,36 @@ body.authenticated .app-shell{
 
 }
 
+body.light-mode{
+    background:#f4f6fb;
+    color:#1c2430;
+}
+
+body.light-mode .card,
+body.light-mode .auth-card,
+body.light-mode .splash-card,
+body.light-mode .box,
+body.light-mode .strategy-card,
+body.light-mode .checklist-item-row{
+    background:#ffffff;
+    color:#1c2430;
+    border-color:#d8e1ec;
+}
+
+body.light-mode input,
+body.light-mode select,
+body.light-mode button,
+body.light-mode .box,
+body.light-mode table th,
+body.light-mode table td{
+    color:#1c2430;
+}
+
+body.light-mode input,
+body.light-mode select{
+    background:#f2f6ff;
+}
+
 body.authenticated .auth-screen{
 
     display:none;
@@ -181,6 +212,68 @@ body.authenticated .auth-screen{
 
     border:0;
 
+}
+
+/* ===========================
+   SPLASH SCREEN
+=========================== */
+
+.splash-screen{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, #111827, #1f2937 60%, #3b82f6);
+    transition:opacity .35s ease, visibility .35s ease;
+}
+
+.splash-screen.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.splash-card{
+    width:min(90%, 480px);
+    padding:32px;
+    border-radius:24px;
+    background:rgba(17,24,39,.9);
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.splash-loader{
+    margin:24px auto;
+    width:54px;
+    height:54px;
+    border:4px solid rgba(255,255,255,.2);
+    border-top-color:#ffd54f;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+.version{
+    margin-top:12px;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);} 
+}
+
+/* ===========================
+   HEADER ACTIONS
+=========================== */
+
+.header-actions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:12px;
 }
 
 /* ===========================
@@ -625,6 +718,69 @@ tbody td{
     font-size:14px;
 
 }
+
+.transport-table{ 
+    display:block;
+    overflow-x:auto;
+}
+
+.transport-table th,
+.transport-table td{
+    min-width:88px;
+}
+
+.transport-cell{
+    margin:0;
+    min-width:70px;
+}
+
+.strategy-summary{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+}
+
+.strategy-pill{
+    padding:8px 12px;
+    border-radius:999px;
+    background:#3b82f6;
+    color:white;
+    font-weight:600;
+}
+
+.strategy-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.strategy-card,
+.checklist-item-row{
+    background:#2d2d2d;
+    border:1px solid #3b3b3b;
+    border-radius:12px;
+    padding:12px;
+}
+
+.checklist-item-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.warning-box{
+    margin-top:10px;
+    color:#ffd54f;
+}
+
+.warning.danger{color:#ff5252;}
+.warning.orange{color:#ff9800;}
+.warning.yellow{color:#ffd54f;}
+
+.compact-box{padding:16px;}
 
 #resultTable td:first-child{
 
