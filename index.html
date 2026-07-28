@@ -26,6 +26,21 @@
     </div>
   </div>
 
+  <div class="loading-screen is-hidden" id="loadingScreen" role="status" aria-live="polite">
+    <div class="loading-card">
+      <img class="auth-logo" src="assets/icons/icon-192.png" alt="Albion Calculator logo">
+      <h2>Preparing your workspace</h2>
+      <p id="loadingStatus">Initializing application...</p>
+      <div class="loading-bar" aria-hidden="true">
+        <div id="loadingProgressBar" class="loading-bar-fill"></div>
+      </div>
+      <div class="loading-meta">
+        <span id="loadingPercent">0%</span>
+        <span id="loadingHint">Please wait</span>
+      </div>
+    </div>
+  </div>
+
   <div class="auth-screen" id="authScreen">
     <div class="auth-card">
       <img class="auth-logo" src="assets/icons/icon-192.png" alt="Albion Calculator logo">

@@ -130,10 +130,21 @@ body{
 
 }
 
+.app-shell.is-visible{
+    display:block;
+}
+
 body.authenticated .app-shell{
 
     display:block;
 
+}
+
+.auth-screen.is-hidden{
+    display:none;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
 }
 
 body.light-mode{
@@ -215,33 +226,40 @@ body.authenticated .auth-screen{
 }
 
 /* ===========================
-   SPLASH SCREEN
+   SPLASH & LOADING SCREEN
 =========================== */
 
-.splash-screen{
+.splash-screen,
+.loading-screen{
     position:fixed;
     inset:0;
     z-index:999;
     display:flex;
     align-items:center;
     justify-content:center;
+    padding:24px;
     background:linear-gradient(135deg, #111827, #1f2937 60%, #3b82f6);
-    transition:opacity .35s ease, visibility .35s ease;
+    transition:opacity .35s ease, visibility .35s ease, transform .35s ease;
 }
 
-.splash-screen.is-hidden{
+.splash-screen.is-hidden,
+.loading-screen.is-hidden{
     opacity:0;
     visibility:hidden;
     pointer-events:none;
+    transform:scale(1.02);
 }
 
-.splash-card{
+.splash-card,
+.loading-card{
     width:min(90%, 480px);
     padding:32px;
     border-radius:24px;
     background:rgba(17,24,39,.9);
     text-align:center;
     box-shadow:0 20px 60px rgba(0,0,0,.35);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
 }
 
 .splash-loader{
@@ -252,6 +270,31 @@ body.authenticated .auth-screen{
     border-top-color:#ffd54f;
     border-radius:50%;
     animation:spin 1s linear infinite;
+}
+
+.loading-bar{
+    width:100%;
+    height:10px;
+    margin:22px 0 12px;
+    background:rgba(255,255,255,.12);
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.loading-bar-fill{
+    height:100%;
+    width:0%;
+    border-radius:999px;
+    background:linear-gradient(90deg, #ffd54f, #60a5fa);
+    transition:width .25s ease;
+}
+
+.loading-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:#cbd5e1;
+    font-size:14px;
 }
 
 .version{

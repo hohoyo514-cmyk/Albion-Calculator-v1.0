@@ -71,6 +71,11 @@
     loginMessage: document.getElementById('loginMessage'),
     logoutButton: document.getElementById('logoutButton'),
     splashScreen: document.getElementById('splashScreen'),
+    loadingScreen: document.getElementById('loadingScreen'),
+    loadingStatus: document.getElementById('loadingStatus'),
+    loadingProgressBar: document.getElementById('loadingProgressBar'),
+    loadingPercent: document.getElementById('loadingPercent'),
+    loadingHint: document.getElementById('loadingHint'),
     body: document.body,
     itemName: document.getElementById('itemName'),
     itemTier: document.getElementById('itemTier'),
@@ -130,17 +135,114 @@
   async function init() {
     bindEvents();
     renderTransportMatrix();
-    await loadStaticData();
-    restoreAppState();
-    loadHistory();
-    loadPresets();
-    loadShoppingChecklist();
-    renderMaterialRows();
-    renderMultiItems();
-    updateFeeValue();
-    calculateAndRender(false);
+    await startApplicationStartup();
+  }
+
+  function setLoadingState(percent, message, hint) {
+    if (els.loadingProgressBar) {
+      els.loadingProgressBar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+    }
+    if (els.loadingPercent) {
+      els.loadingPercent.textContent = `${Math.round(percent)}%`;
+    }
+    if (els.loadingStatus) {
+      els.loadingStatus.textContent = message;
+    }
+    if (els.loadingHint) {
+      els.loadingHint.textContent = hint || 'Please wait';
+    }
+  }
+
+  function waitForNextFrame() {
+    return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  }
+
+  async function startApplicationStartup() {
+    els.body.classList.add('startup-loading');
+    showSplashScreen();
+    setLoadingState(0, 'Initializing application...', 'Preparing startup');
+    await wait(1600);
+    hideSplashScreen();
+    await wait(120);
+    showLoadingScreen();
+
+    const steps = [
+      { progress: 10, message: 'Initializing application...', hint: 'Booting interface' },
+      { progress: 20, message: 'Loading calculator engine...', hint: 'Preparing formulas' },
+      { progress: 35, message: 'Loading saved market prices...', hint: 'Restoring local prices' },
+      { progress: 50, message: 'Loading inventory...', hint: 'Restoring item balance' },
+      { progress: 65, message: 'Loading price presets...', hint: 'Restoring saved templates' },
+      { progress: 75, message: 'Loading user settings...', hint: 'Restoring theme and preferences' },
+      { progress: 85, message: 'Loading calculation history...', hint: 'Restoring recent runs' },
+      { progress: 93, message: 'Preparing dashboard...', hint: 'Rendering calculator views' },
+      { progress: 97, message: 'Finalizing...', hint: 'Almost ready' },
+      { progress: 100, message: 'Ready!', hint: 'Opening dashboard' }
+    ];
+
+    for (const [index, step] of steps.entries()) {
+      setLoadingState(step.progress, step.message, step.hint);
+      await waitForNextFrame();
+
+      if (index === 1) {
+        await loadStaticData();
+      } else if (index === 2) {
+        restoreAppState();
+      } else if (index === 3) {
+        loadShoppingChecklist();
+      } else if (index === 4) {
+        loadPresets();
+      } else if (index === 5) {
+        restoreUserSettings();
+      } else if (index === 6) {
+        loadHistory();
+      } else if (index === 7) {
+        renderMaterialRows();
+        renderMultiItems();
+        updateFeeValue();
+        calculateAndRender(false);
+      } else if (index === 8) {
+        await wait(100);
+      } else if (index === 9) {
+        await wait(120);
+      }
+
+      await wait(70);
+    }
+
+    hideLoadingScreen();
+    els.body.classList.remove('startup-loading');
+    finalizeStartup();
+  }
+
+  function restoreUserSettings() {
     applyTheme();
-    setTimeout(() => hideSplashScreen(), 700);
+    const isAuthenticated = localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
+    if (isAuthenticated) {
+      document.body.classList.add('authenticated');
+      els.authScreen.classList.add('is-hidden');
+      els.appShell.classList.add('is-visible');
+    } else {
+      document.body.classList.remove('authenticated');
+      els.authScreen.classList.remove('is-hidden');
+      els.appShell.classList.remove('is-visible');
+    }
+  }
+
+  function finalizeStartup() {
+    const isAuthenticated = localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
+    if (isAuthenticated) {
+      document.body.classList.add('authenticated');
+      els.authScreen.classList.add('is-hidden');
+      els.appShell.classList.add('is-visible');
+    } else {
+      document.body.classList.remove('authenticated');
+      els.authScreen.classList.remove('is-hidden');
+      els.appShell.classList.remove('is-visible');
+    }
+  }
+
+  function wait(duration) {
+    return new Promise((resolve) => setTimeout(resolve, duration));
   }
 
   function bindEvents() {
@@ -999,7 +1101,9 @@
 
     els.optimizerCheapestCity.textContent = cheapestCity.cheapestCity;
     els.optimizerCheapestPrice.textContent = formatCurrency(cheapestCity.cheapestPrice);
-    els.optimizerTotalCost.textContent = formatCurrency(mixedCost);
+    if (els.optimizerTotalCost) {
+      els.optimizerTotalCost.textContent = formatCurrency(mixedCost);
+    }
     els.optimizerSingleCity.textContent = singleCity.city;
     els.optimizerMixedCost.textContent = formatCurrency(mixedCost);
 
@@ -1397,6 +1501,14 @@
 
   function hideSplashScreen() {
     els.splashScreen.classList.add('is-hidden');
+  }
+
+  function showLoadingScreen() {
+    els.loadingScreen.classList.remove('is-hidden');
+  }
+
+  function hideLoadingScreen() {
+    els.loadingScreen.classList.add('is-hidden');
   }
 
   if ('serviceWorker' in navigator) {
